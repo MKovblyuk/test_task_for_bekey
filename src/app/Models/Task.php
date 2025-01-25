@@ -6,6 +6,7 @@ use App\Enums\TaskStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class Task extends Model
 {
@@ -21,6 +22,13 @@ class Task extends Model
     protected $casts = [
         'status' => TaskStatus::class,
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($product) {
+            $product->creator_id = Auth::id();
+        });
+    }
 
     public function creator(): BelongsTo
     {
