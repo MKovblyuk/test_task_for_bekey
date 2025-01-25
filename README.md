@@ -26,6 +26,7 @@
     php artisan migrate
     php artisan db:seed
     php artisan key:generate
+    php artisan serve --host 0.0.0.0
 8. **Grant access permission to directories:**
     - src/bootstrap/cache
     - src/storage
