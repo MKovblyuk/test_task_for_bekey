@@ -10,17 +10,24 @@ class AuthService implements AuthServiceInterface
 {
     public const TOKEN_PREFIX = 'user_token_';
     public const TOKEN_EXPIRATION_DAYS = 2;
+    public const TOKEN_REMEMBER_EXPIRATION_DAYS = 14;
 
-    public function login(array $credentials): ?array
+
+    public function login(array $validated): ?array
     {
+        $credentials = [
+            'password' => $validated['password'],
+            'email' => $validated['email'],
+        ];
+
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            $userToken = $user->createToken(
-                self::TOKEN_PREFIX . $user->id,
-                ['*'],
-                now()->addDays(self::TOKEN_EXPIRATION_DAYS)
-            );
+            $expiresAt = $validated['remember'] 
+                ? now()->addDays(self::TOKEN_EXPIRATION_DAYS)
+                : now()->addDays(self::TOKEN_REMEMBER_EXPIRATION_DAYS);
+
+            $userToken = $user->createToken(self::TOKEN_PREFIX . $user->id,['*'], $expiresAt);
 
             return [
                 'token' => $userToken->plainTextToken,
