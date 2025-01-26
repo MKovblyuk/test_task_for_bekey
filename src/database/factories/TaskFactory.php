@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\TaskStatus;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,6 +24,7 @@ class TaskFactory extends Factory
             'name' => fake()->sentence(),
             'description' => fake()->text(),
             'status' => $statuses[array_rand($statuses)],
+            'creator_id' => User::factory()->create(),
         ];
     }
 }
