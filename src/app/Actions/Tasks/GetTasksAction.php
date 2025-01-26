@@ -14,7 +14,7 @@ class GetTasksAction
         $query = QueryBuilder::for(Task::class)
             ->allowedFilters([
                 AllowedFilter::exact('creator_id'),
-                'status',
+                AllowedFilter::exact('status'),
             ]);
 
         return $perPage ? $query->paginate($perPage) : $query->get();
