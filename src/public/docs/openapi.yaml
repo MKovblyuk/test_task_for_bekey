@@ -7,16 +7,281 @@ servers:
   -
     url: 'http://localhost'
 paths:
-  '/api/v1/tasks/{task_id}/complete':
-    patch:
-      summary: ''
-      operationId: patchApiV1TasksTask_idComplete
+  /api/v1/login:
+    post:
+      summary: Login
+      operationId: login
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User successfully logged in'
+                  token: 1|YGwScKg7jPnZlviC5tGjfSKYy5sFsEsy5odBftn16977e462
+                  userId: 1
+                properties:
+                  message:
+                    type: string
+                    example: 'User successfully logged in'
+                  token:
+                    type: string
+                    example: 1|YGwScKg7jPnZlviC5tGjfSKYy5sFsEsy5odBftn16977e462
+                  userId:
+                    type: integer
+                    example: 1
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Incorrect credentials'
+                properties:
+                  message:
+                    type: string
+                    example: 'Incorrect credentials'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Validation Failed'
+                  errors:
+                    email:
+                      - 'The email field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Validation Failed'
+                  errors:
+                    type: object
+                    properties:
+                      email:
+                        type: array
+                        example:
+                          - 'The email field is required.'
+                        items:
+                          type: string
       tags:
-        - Endpoints
+        - 'Auth management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address. The <code>email</code> of an existing record in the users table.'
+                  example: colton.labadie@example.org
+                  nullable: false
+                password:
+                  type: string
+                  description: string
+                  example: 12QWERTY_3a
+                  nullable: false
+                remember:
+                  type: boolean
+                  description: ''
+                  example: false
+                  nullable: false
+              required:
+                - email
+                - password
       security: []
+  /api/v1/register:
+    post:
+      summary: Register
+      operationId: register
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User successfully registered'
+                  token: 1|YGwScKg7jPnZlviC5tGjfSKYy5sFsEsy5odBftn16977e462
+                  userId: 1
+                properties:
+                  message:
+                    type: string
+                    example: 'User successfully registered'
+                  token:
+                    type: string
+                    example: 1|YGwScKg7jPnZlviC5tGjfSKYy5sFsEsy5odBftn16977e462
+                  userId:
+                    type: integer
+                    example: 1
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Validation Failed'
+                  errors:
+                    name:
+                      - 'The name field is required.'
+                    email:
+                      - 'The email field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Validation Failed'
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        example:
+                          - 'The name field is required.'
+                        items:
+                          type: string
+                      email:
+                        type: array
+                        example:
+                          - 'The email field is required.'
+                        items:
+                          type: string
+        500:
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Registration failed'
+                properties:
+                  message:
+                    type: string
+                    example: 'Registration failed'
+      tags:
+        - 'Auth management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Must not be greater than 75 characters.'
+                  example: nbdikincugaovr
+                  nullable: false
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: jast.gerald@example.net
+                  nullable: false
+                password:
+                  type: string
+                  description: ''
+                  example: 12QWERTY_3a
+                  nullable: false
+                password_confirmation:
+                  type: string
+                  description: ''
+                  example: 12QWERTY_3a
+                  nullable: false
+              required:
+                - name
+                - email
+                - password
+                - password_confirmation
+      security: []
+  /api/v1/logout:
+    post:
+      summary: Logout
+      operationId: logout
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'User logged out'
+                properties:
+                  message:
+                    type: string
+                    example: 'User logged out'
+      tags:
+        - 'Auth management'
+  '/api/v1/tasks/{task_id}/complete':
+    patch:
+      summary: 'Set the task status as completed.'
+      operationId: setTheTaskStatusAsCompleted
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task completed'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task completed'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task not completed'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task not completed'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found Resource'
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found Resource'
+      tags:
+        - 'Task management'
     parameters:
       -
         in: path
@@ -28,14 +293,61 @@ paths:
           type: integer
   '/api/v1/tasks/{task_id}/uncomplete':
     patch:
-      summary: ''
-      operationId: patchApiV1TasksTask_idUncomplete
+      summary: 'Set the task status as uncompleted.'
+      operationId: setTheTaskStatusAsUncompleted
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task uncompleted'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task uncompleted'
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task not uncompleted'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task not uncompleted'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found Resource'
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found Resource'
       tags:
-        - Endpoints
-      security: []
+        - 'Task management'
     parameters:
       -
         in: path
@@ -47,11 +359,101 @@ paths:
           type: integer
   /api/v1/tasks:
     get:
-      summary: ''
-      operationId: getApiV1Tasks
+      summary: 'Get a list of tasks.'
+      operationId: getAListOfTasks
       description: ''
-      parameters: []
+      parameters:
+        -
+          in: query
+          name: 'filter[status]'
+          description: 'Filter tasks by status.'
+          example: Completed
+          required: false
+          schema:
+            type: string
+            description: 'Filter tasks by status.'
+            example: Completed
+            nullable: false
+        -
+          in: query
+          name: 'filter[creator_id]'
+          description: 'Filter tasks by creator ids.'
+          example: '1,2,5'
+          required: false
+          schema:
+            type: string
+            description: 'Filter tasks by creator ids.'
+            example: '1,2,5'
+            nullable: false
       responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    -
+                      id: 219
+                      name: 'Voluptatem quis qui perferendis pariatur.'
+                      description: 'Reiciendis sit doloremque et voluptatibus. Earum doloremque dolor esse iusto quas. Nihil delectus blanditiis vitae sed soluta.'
+                      status: Uncompleted
+                      creatorId: 120
+                      createdAt: '2025-01-26T14:50:57.000000Z'
+                      updatedAt: '2025-01-26T14:50:57.000000Z'
+                    -
+                      id: 220
+                      name: 'Consequatur ea corrupti tenetur tempore et assumenda debitis praesentium.'
+                      description: 'Laudantium dolorem quos perspiciatis sit. Officiis ea velit et. Et facilis deleniti enim accusamus aspernatur ab sit voluptate.'
+                      status: Completed
+                      creatorId: 121
+                      createdAt: '2025-01-26T14:50:57.000000Z'
+                      updatedAt: '2025-01-26T14:50:57.000000Z'
+                properties:
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 219
+                        name: 'Voluptatem quis qui perferendis pariatur.'
+                        description: 'Reiciendis sit doloremque et voluptatibus. Earum doloremque dolor esse iusto quas. Nihil delectus blanditiis vitae sed soluta.'
+                        status: Uncompleted
+                        creatorId: 120
+                        createdAt: '2025-01-26T14:50:57.000000Z'
+                        updatedAt: '2025-01-26T14:50:57.000000Z'
+                      -
+                        id: 220
+                        name: 'Consequatur ea corrupti tenetur tempore et assumenda debitis praesentium.'
+                        description: 'Laudantium dolorem quos perspiciatis sit. Officiis ea velit et. Et facilis deleniti enim accusamus aspernatur ab sit voluptate.'
+                        status: Completed
+                        creatorId: 121
+                        createdAt: '2025-01-26T14:50:57.000000Z'
+                        updatedAt: '2025-01-26T14:50:57.000000Z'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 219
+                        name:
+                          type: string
+                          example: 'Voluptatem quis qui perferendis pariatur.'
+                        description:
+                          type: string
+                          example: 'Reiciendis sit doloremque et voluptatibus. Earum doloremque dolor esse iusto quas. Nihil delectus blanditiis vitae sed soluta.'
+                        status:
+                          type: string
+                          example: Uncompleted
+                        creatorId:
+                          type: integer
+                          example: 120
+                        createdAt:
+                          type: string
+                          example: '2025-01-26T14:50:57.000000Z'
+                        updatedAt:
+                          type: string
+                          example: '2025-01-26T14:50:57.000000Z'
         401:
           description: ''
           content:
@@ -65,16 +467,75 @@ paths:
                     type: string
                     example: Unauthenticated.
       tags:
-        - Endpoints
-      security: []
+        - 'Task management'
     post:
-      summary: ''
-      operationId: postApiV1Tasks
+      summary: 'Create task.'
+      operationId: createTask
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        201:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task successfully created.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task successfully created.'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Validation Failed'
+                  errors:
+                    name:
+                      - 'The name field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Validation Failed'
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        example:
+                          - 'The name field is required.'
+                        items:
+                          type: string
+        500:
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task not created'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task not created'
       tags:
-        - Endpoints
+        - 'Task management'
       requestBody:
         required: true
         content:
@@ -85,24 +546,63 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 100 characters.'
-                  example: uidlehiwlfphlo
+                  example: yjccno
                   nullable: false
                 description:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: 'Labore ipsa non deleniti qui magnam officia magni.'
+                  example: 'Aut et dolor eos cumque culpa sed ut.'
                   nullable: false
               required:
                 - name
                 - description
-      security: []
   '/api/v1/tasks/{id}':
     get:
-      summary: ''
-      operationId: getApiV1TasksId
+      summary: 'Get a single task.'
+      operationId: getASingleTask
       description: ''
       parameters: []
       responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    id: 221
+                    name: 'Et atque dolor aut sint facere.'
+                    description: 'Dolores omnis quia ea nam nobis et placeat. Pariatur adipisci ipsam recusandae. Nostrum tenetur facere explicabo aliquid. Earum et quasi culpa eligendi quia occaecati nemo.'
+                    status: Uncompleted
+                    creatorId: 122
+                    createdAt: '2025-01-26T14:50:58.000000Z'
+                    updatedAt: '2025-01-26T14:50:58.000000Z'
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 221
+                      name:
+                        type: string
+                        example: 'Et atque dolor aut sint facere.'
+                      description:
+                        type: string
+                        example: 'Dolores omnis quia ea nam nobis et placeat. Pariatur adipisci ipsam recusandae. Nostrum tenetur facere explicabo aliquid. Earum et quasi culpa eligendi quia occaecati nemo.'
+                      status:
+                        type: string
+                        example: Uncompleted
+                      creatorId:
+                        type: integer
+                        example: 122
+                      createdAt:
+                        type: string
+                        example: '2025-01-26T14:50:58.000000Z'
+                      updatedAt:
+                        type: string
+                        example: '2025-01-26T14:50:58.000000Z'
         401:
           description: ''
           content:
@@ -115,17 +615,100 @@ paths:
                   message:
                     type: string
                     example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found Resource'
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found Resource'
       tags:
-        - Endpoints
-      security: []
+        - 'Task management'
     put:
-      summary: ''
-      operationId: putApiV1TasksId
+      summary: 'Update task.'
+      operationId: updateTask
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task successfully updated'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task successfully updated'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found Resource'
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found Resource'
+        422:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Validation Failed'
+                  errors:
+                    name:
+                      - 'The name field is required.'
+                properties:
+                  message:
+                    type: string
+                    example: 'Validation Failed'
+                  errors:
+                    type: object
+                    properties:
+                      name:
+                        type: array
+                        example:
+                          - 'The name field is required.'
+                        items:
+                          type: string
+        500:
+          description: 'Server error'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task not updated'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task not updated'
       tags:
-        - Endpoints
+        - 'Task management'
       requestBody:
         required: true
         content:
@@ -136,17 +719,17 @@ paths:
                 name:
                   type: string
                   description: 'Must not be greater than 100 characters.'
-                  example: xofegemsvq
+                  example: vcaec
                   nullable: false
                 description:
                   type: string
                   description: 'Must not be greater than 255 characters.'
-                  example: 'Deleniti qui architecto iusto delectus eligendi est voluptate.'
+                  example: 'Maxime ratione vero autem ipsum eos.'
                   nullable: false
                 status:
                   type: string
                   description: ''
-                  example: Completed
+                  example: Uncompleted
                   nullable: false
                   enum:
                     - Completed
@@ -154,16 +737,52 @@ paths:
               required:
                 - name
                 - description
-      security: []
     delete:
-      summary: ''
-      operationId: deleteApiV1TasksId
+      summary: 'Delete task.'
+      operationId: deleteTask
       description: ''
       parameters: []
-      responses: {  }
+      responses:
+        204:
+          description: Success
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Task not deleted'
+                properties:
+                  message:
+                    type: string
+                    example: 'Task not deleted'
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Not Found Resource'
+                properties:
+                  message:
+                    type: string
+                    example: 'Not Found Resource'
       tags:
-        - Endpoints
-      security: []
+        - 'Task management'
     parameters:
       -
         in: path
@@ -173,94 +792,19 @@ paths:
         required: true
         schema:
           type: integer
-  /api/v1/login:
-    post:
-      summary: ''
-      operationId: postApiV1Login
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: 'The <code>email</code> of an existing record in the users table.'
-                  example: explicabo
-                  nullable: false
-                password:
-                  type: string
-                  description: ''
-                  example: magni
-                  nullable: false
-                remember:
-                  type: boolean
-                  description: ''
-                  example: true
-                  nullable: false
-              required:
-                - email
-                - password
-      security: []
-  /api/v1/register:
-    post:
-      summary: ''
-      operationId: postApiV1Register
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: 'Must not be greater than 75 characters.'
-                  example: vzrcpygnmflqu
-                  nullable: false
-                email:
-                  type: string
-                  description: 'Must be a valid email address.'
-                  example: vernon.yundt@example.com
-                  nullable: false
-                password:
-                  type: string
-                  description: ''
-                  example: non
-                  nullable: false
-                password_confirmation:
-                  type: string
-                  description: ''
-                  example: sed
-                  nullable: false
-              required:
-                - name
-                - email
-                - password
-                - password_confirmation
-      security: []
-  /api/v1/logout:
-    post:
-      summary: ''
-      operationId: postApiV1Logout
-      description: ''
-      parameters: []
-      responses: {  }
-      tags:
-        - Endpoints
-      security: []
 tags:
   -
-    name: Endpoints
-    description: ''
+    name: 'Auth management'
+    description: "\nAPIs for managing authentication"
+  -
+    name: 'Task management'
+    description: "\nAPIs for managing tasks"
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by registering or logging in.'
+security:
+  -
+    default: []

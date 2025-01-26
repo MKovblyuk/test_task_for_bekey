@@ -10,17 +10,155 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "39001f0b-c1b0-42d3-886b-ca25e5363e69",
+        "_postman_id": "78df7d42-d585-4220-bb36-57fe95fc2bf5",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
     "item": [
         {
-            "name": "Endpoints",
-            "description": "",
+            "name": "Auth management",
+            "description": "\nAPIs for managing authentication",
             "item": [
                 {
-                    "name": "PATCH api\/v1\/tasks\/{task_id}\/complete",
+                    "name": "Login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"colton.labadie@example.org\",\"password\":\"12QWERTY_3a\",\"remember\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"message\": \"User successfully logged in\",\n     \"token\": \"1|YGwScKg7jPnZlviC5tGjfSKYy5sFsEsy5odBftn16977e462\",\n     \"userId\": 1\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Incorrect credentials\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"message\": \"Validation Failed\",\n     \"errors\": {\n         \"email\": [\n             \"The email field is required.\"\n         ]\n     }\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Register",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"nbdikincugaovr\",\"email\":\"jast.gerald@example.net\",\"password\":\"12QWERTY_3a\",\"password_confirmation\":\"12QWERTY_3a\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n     \"message\": \"User successfully registered\",\n     \"token\": \"1|YGwScKg7jPnZlviC5tGjfSKYy5sFsEsy5odBftn16977e462\",\n     \"userId\": 1\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"message\": \"Validation Failed\",\n     \"errors\": {\n         \"name\": [\n             \"The name field is required.\"\n         ],\n         \"email\": [\n             \"The email field is required.\"\n         ]\n     }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\"message\": \"Registration failed\"}",
+                            "name": "Server error"
+                        }
+                    ]
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\": \"User logged out\"}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Task management",
+            "description": "\nAPIs for managing tasks",
+            "item": [
+                {
+                    "name": "Set the task status as completed.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -48,15 +186,37 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\": \"Task completed\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\"message\": \"Task not completed\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Not Found Resource\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
-                    "name": "PATCH api\/v1\/tasks\/{task_id}\/uncomplete",
+                    "name": "Set the task status as uncompleted.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -84,21 +244,56 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\": \"Task uncompleted\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\"message\": \"Task not uncompleted\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Not Found Resource\"}",
+                            "name": ""
+                        }
+                    ]
                 },
                 {
-                    "name": "GET api\/v1\/tasks",
+                    "name": "Get a list of tasks.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
                             "path": "api\/v1\/tasks",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/tasks"
+                            "query": [
+                                {
+                                    "key": "filter%5Bstatus%5D",
+                                    "value": "Completed",
+                                    "description": "Filter tasks by status.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "filter%5Bcreator_id%5D",
+                                    "value": "1%2C2%2C5",
+                                    "description": "Filter tasks by creator ids.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/tasks?filter%5Bstatus%5D=Completed&filter%5Bcreator_id%5D=1%2C2%2C5"
                         },
                         "method": "GET",
                         "header": [
@@ -112,35 +307,25 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":219,\"name\":\"Voluptatem quis qui perferendis pariatur.\",\"description\":\"Reiciendis sit doloremque et voluptatibus. Earum doloremque dolor esse iusto quas. Nihil delectus blanditiis vitae sed soluta.\",\"status\":\"Uncompleted\",\"creatorId\":120,\"createdAt\":\"2025-01-26T14:50:57.000000Z\",\"updatedAt\":\"2025-01-26T14:50:57.000000Z\"},{\"id\":220,\"name\":\"Consequatur ea corrupti tenetur tempore et assumenda debitis praesentium.\",\"description\":\"Laudantium dolorem quos perspiciatis sit. Officiis ea velit et. Et facilis deleniti enim accusamus aspernatur ab sit voluptate.\",\"status\":\"Completed\",\"creatorId\":121,\"createdAt\":\"2025-01-26T14:50:57.000000Z\",\"updatedAt\":\"2025-01-26T14:50:57.000000Z\"}]}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "body": "{\"message\": \"Unauthenticated.\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "POST api\/v1\/tasks",
+                    "name": "Create task.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -161,17 +346,39 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"uidlehiwlfphlo\",\"description\":\"Labore ipsa non deleniti qui magnam officia magni.\"}"
+                            "raw": "{\"name\":\"yjccno\",\"description\":\"Aut et dolor eos cumque culpa sed ut.\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\"message\": \"Task successfully created.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"message\": \"Validation Failed\",\n     \"errors\": {\n         \"name\": [\n             \"The name field is required.\"\n         ]\n     }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\"message\": \"Task not created\"}",
+                            "name": "Server error"
+                        }
+                    ]
                 },
                 {
-                    "name": "GET api\/v1\/tasks\/{id}",
+                    "name": "Get a single task.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -199,35 +406,31 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
                     "response": [
                         {
-                            "header": [
-                                {
-                                    "key": "cache-control",
-                                    "value": "no-cache, private"
-                                },
-                                {
-                                    "key": "content-type",
-                                    "value": "application\/json"
-                                },
-                                {
-                                    "key": "access-control-allow-origin",
-                                    "value": "*"
-                                }
-                            ],
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"data\":{\"id\":221,\"name\":\"Et atque dolor aut sint facere.\",\"description\":\"Dolores omnis quia ea nam nobis et placeat. Pariatur adipisci ipsam recusandae. Nostrum tenetur facere explicabo aliquid. Earum et quasi culpa eligendi quia occaecati nemo.\",\"status\":\"Uncompleted\",\"creatorId\":122,\"createdAt\":\"2025-01-26T14:50:58.000000Z\",\"updatedAt\":\"2025-01-26T14:50:58.000000Z\"}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
                             "code": 401,
-                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Not Found Resource\"}",
                             "name": ""
                         }
                     ]
                 },
                 {
-                    "name": "PUT api\/v1\/tasks\/{id}",
+                    "name": "Update task.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -256,17 +459,45 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"xofegemsvq\",\"description\":\"Deleniti qui architecto iusto delectus eligendi est voluptate.\",\"status\":\"Completed\"}"
+                            "raw": "{\"name\":\"vcaec\",\"description\":\"Maxime ratione vero autem ipsum eos.\",\"status\":\"Uncompleted\"}"
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\"message\": \"Task successfully updated\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Not Found Resource\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"message\": \"Validation Failed\",\n     \"errors\": {\n         \"name\": [\n             \"The name field is required.\"\n         ]\n     }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\"message\": \"Task not updated\"}",
+                            "name": "Server error"
+                        }
+                    ]
                 },
                 {
-                    "name": "DELETE api\/v1\/tasks\/{id}",
+                    "name": "Delete task.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -294,107 +525,45 @@
                             }
                         ],
                         "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
+                        "description": ""
                     },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/v1\/login",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/login",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/login"
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 204,
+                            "body": "",
+                            "name": "Success"
                         },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"email\":\"explicabo\",\"password\":\"magni\",\"remember\":true}"
+                        {
+                            "header": [],
+                            "code": 400,
+                            "body": "{\"message\": \"Task not deleted\"}",
+                            "name": ""
                         },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\"message\": \"Unauthenticated.\"}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Not Found Resource\"}",
+                            "name": ""
                         }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/v1\/register",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/register",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/register"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\"name\":\"vzrcpygnmflqu\",\"email\":\"vernon.yundt@example.com\",\"password\":\"non\",\"password_confirmation\":\"sed\"}"
-                        },
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
-                },
-                {
-                    "name": "POST api\/v1\/logout",
-                    "request": {
-                        "url": {
-                            "host": "{{baseUrl}}",
-                            "path": "api\/v1\/logout",
-                            "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/logout"
-                        },
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application\/json"
-                            },
-                            {
-                                "key": "Accept",
-                                "value": "application\/json"
-                            }
-                        ],
-                        "body": null,
-                        "description": "",
-                        "auth": {
-                            "type": "noauth"
-                        }
-                    },
-                    "response": []
+                    ]
                 }
             ]
         }
     ],
     "auth": {
-        "type": "noauth"
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "type": "string"
+            }
+        ]
     }
 }

@@ -1,20 +1,25 @@
-name: Endpoints
-description: ''
+name: 'Task management'
+description: |-
+
+  APIs for managing tasks
 endpoints:
   -
     httpMethods:
       - PATCH
     uri: 'api/v1/tasks/{task_id}/complete'
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Set the task status as completed.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -35,9 +40,36 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: '{"message": "Task completed"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: '{"message": "Task not completed"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: '{"message": "Not Found Resource"}'
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer fageZvV4b1Pk3ca6d8hE56D'
     controller: null
     method: null
     route: null
@@ -47,15 +79,18 @@ endpoints:
       - PATCH
     uri: 'api/v1/tasks/{task_id}/uncomplete'
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Set the task status as uncompleted.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -76,9 +111,36 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: '{"message": "Task uncompleted"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 400
+        content: '{"message": "Task not uncompleted"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: '{"message": "Not Found Resource"}'
+        headers: []
+        description: ''
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 6vD6aeZ3fV5bP4dgk8Ehac1'
     controller: null
     method: null
     route: null
@@ -88,36 +150,67 @@ endpoints:
       - GET
     uri: api/v1/tasks
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Get a list of tasks.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
     cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
+    queryParameters:
+      'filter[status]':
+        name: 'filter[status]'
+        description: 'Filter tasks by status.'
+        required: false
+        example: Completed
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      'filter[creator_id]':
+        name: 'filter[creator_id]'
+        description: 'Filter tasks by creator ids.'
+        required: false
+        example: '1,2,5'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanQueryParameters:
+      'filter[status]': Completed
+      'filter[creator_id]': '1,2,5'
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
     responses:
       -
+        status: 200
+        content: '{"data":[{"id":219,"name":"Voluptatem quis qui perferendis pariatur.","description":"Reiciendis sit doloremque et voluptatibus. Earum doloremque dolor esse iusto quas. Nihil delectus blanditiis vitae sed soluta.","status":"Uncompleted","creatorId":120,"createdAt":"2025-01-26T14:50:57.000000Z","updatedAt":"2025-01-26T14:50:57.000000Z"},{"id":220,"name":"Consequatur ea corrupti tenetur tempore et assumenda debitis praesentium.","description":"Laudantium dolorem quos perspiciatis sit. Officiis ea velit et. Et facilis deleniti enim accusamus aspernatur ab sit voluptate.","status":"Completed","creatorId":121,"createdAt":"2025-01-26T14:50:57.000000Z","updatedAt":"2025-01-26T14:50:57.000000Z"}]}'
+        headers: []
+        description: ''
+        custom: []
+      -
         status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer akdPZV6cgf1ED3h5abv8e64'
     controller: null
     method: null
     route: null
@@ -127,15 +220,18 @@ endpoints:
       - POST
     uri: api/v1/tasks
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Create task.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -147,7 +243,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 100 characters.'
         required: true
-        example: uidlehiwlfphlo
+        example: yjccno
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -157,19 +253,54 @@ endpoints:
         name: description
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: 'Labore ipsa non deleniti qui magnam officia magni.'
+        example: 'Aut et dolor eos cumque culpa sed ut.'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: uidlehiwlfphlo
-      description: 'Labore ipsa non deleniti qui magnam officia magni.'
+      name: yjccno
+      description: 'Aut et dolor eos cumque culpa sed ut.'
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 201
+        content: '{"message": "Task successfully created."}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+              "message": "Validation Failed",
+               "errors": {
+                   "name": [
+                       "The name field is required."
+                   ]
+               }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: '{"message": "Task not created"}'
+        headers: []
+        description: 'Server error'
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer P34kgdDh68vaEfa1VZb6e5c'
     controller: null
     method: null
     route: null
@@ -179,15 +310,18 @@ endpoints:
       - GET
     uri: 'api/v1/tasks/{id}'
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Get a single task.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -210,16 +344,28 @@ endpoints:
     fileParameters: []
     responses:
       -
+        status: 200
+        content: '{"data":{"id":221,"name":"Et atque dolor aut sint facere.","description":"Dolores omnis quia ea nam nobis et placeat. Pariatur adipisci ipsam recusandae. Nostrum tenetur facere explicabo aliquid. Earum et quasi culpa eligendi quia occaecati nemo.","status":"Uncompleted","creatorId":122,"createdAt":"2025-01-26T14:50:58.000000Z","updatedAt":"2025-01-26T14:50:58.000000Z"}}'
+        headers: []
+        description: ''
+        custom: []
+      -
         status: 401
-        content: '{"message":"Unauthenticated."}'
-        headers:
-          cache-control: 'no-cache, private'
-          content-type: application/json
-          access-control-allow-origin: '*'
-        description: null
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: '{"message": "Not Found Resource"}'
+        headers: []
+        description: ''
         custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer cv8VZD4d65abh61fkg3EeaP'
     controller: null
     method: null
     route: null
@@ -230,15 +376,18 @@ endpoints:
       - PATCH
     uri: 'api/v1/tasks/{id}'
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Update task.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -261,7 +410,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 100 characters.'
         required: true
-        example: xofegemsvq
+        example: vcaec
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -271,7 +420,7 @@ endpoints:
         name: description
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: 'Deleniti qui architecto iusto delectus eligendi est voluptate.'
+        example: 'Maxime ratione vero autem ipsum eos.'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -281,7 +430,7 @@ endpoints:
         name: status
         description: ''
         required: false
-        example: Completed
+        example: Uncompleted
         type: string
         enumValues:
           - Completed
@@ -290,13 +439,54 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: xofegemsvq
-      description: 'Deleniti qui architecto iusto delectus eligendi est voluptate.'
-      status: Completed
+      name: vcaec
+      description: 'Maxime ratione vero autem ipsum eos.'
+      status: Uncompleted
     fileParameters: []
-    responses: []
+    responses:
+      -
+        status: 200
+        content: '{"message": "Task successfully updated"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 404
+        content: '{"message": "Not Found Resource"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+              "message": "Validation Failed",
+               "errors": {
+                   "name": [
+                       "The name field is required."
+                   ]
+               }
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: '{"message": "Task not updated"}'
+        headers: []
+        description: 'Server error'
+        custom: []
     responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer DZaV86ekb4g35fcP61vhEad'
     controller: null
     method: null
     route: null
@@ -306,15 +496,18 @@ endpoints:
       - DELETE
     uri: 'api/v1/tasks/{id}'
     metadata:
-      groupName: Endpoints
-      groupDescription: ''
+      groupName: 'Task management'
+      groupDescription: |-
+
+        APIs for managing tasks
       subgroup: ''
       subgroupDescription: ''
-      title: ''
+      title: 'Delete task.'
       description: ''
-      authenticated: false
+      authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_TOKEN}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -335,176 +528,36 @@ endpoints:
     bodyParameters: []
     cleanBodyParameters: []
     fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/v1/login
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      email:
-        name: email
-        description: 'The <code>email</code> of an existing record in the users table.'
-        required: true
-        example: explicabo
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
+    responses:
+      -
+        status: 204
+        content: ''
+        headers: []
+        description: Success
         custom: []
-      password:
-        name: password
+      -
+        status: 400
+        content: '{"message": "Task not deleted"}'
+        headers: []
         description: ''
-        required: true
-        example: magni
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
         custom: []
-      remember:
-        name: remember
+      -
+        status: 401
+        content: '{"message": "Unauthenticated."}'
+        headers: []
         description: ''
-        required: false
-        example: true
-        type: boolean
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
         custom: []
-    cleanBodyParameters:
-      email: explicabo
-      password: magni
-      remember: true
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/v1/register
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters:
-      name:
-        name: name
-        description: 'Must not be greater than 75 characters.'
-        required: true
-        example: vzrcpygnmflqu
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      email:
-        name: email
-        description: 'Must be a valid email address.'
-        required: true
-        example: vernon.yundt@example.com
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-      password:
-        name: password
+      -
+        status: 404
+        content: '{"message": "Not Found Resource"}'
+        headers: []
         description: ''
-        required: true
-        example: non
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
         custom: []
-      password_confirmation:
-        name: password_confirmation
-        description: ''
-        required: true
-        example: sed
-        type: string
-        enumValues: []
-        exampleWasSpecified: false
-        nullable: false
-        custom: []
-    cleanBodyParameters:
-      name: vzrcpygnmflqu
-      email: vernon.yundt@example.com
-      password: non
-      password_confirmation: sed
-    fileParameters: []
-    responses: []
     responseFields: []
-    auth: []
-    controller: null
-    method: null
-    route: null
-    custom: []
-  -
-    httpMethods:
-      - POST
-    uri: api/v1/logout
-    metadata:
-      groupName: Endpoints
-      groupDescription: ''
-      subgroup: ''
-      subgroupDescription: ''
-      title: ''
-      description: ''
-      authenticated: false
-      custom: []
-    headers:
-      Content-Type: application/json
-      Accept: application/json
-    urlParameters: []
-    cleanUrlParameters: []
-    queryParameters: []
-    cleanQueryParameters: []
-    bodyParameters: []
-    cleanBodyParameters: []
-    fileParameters: []
-    responses: []
-    responseFields: []
-    auth: []
+    auth:
+      - headers
+      - Authorization
+      - 'Bearer 8ZaP6a5D36ecVbdkg4hvf1E'
     controller: null
     method: null
     route: null
