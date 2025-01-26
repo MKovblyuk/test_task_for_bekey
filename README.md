@@ -38,3 +38,7 @@
 **Email:** `test1@gmail.com`
 
 **Password:** `123456`
+
+## API Documentation:
+
+**After eployment api documentation is available at http://localhost/docs**
