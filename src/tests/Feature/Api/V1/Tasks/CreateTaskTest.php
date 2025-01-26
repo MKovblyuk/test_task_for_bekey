@@ -17,7 +17,7 @@ class CreateTaskTest extends ApiV1TestCase
         $this->apiUrl .= '/tasks';
     }
 
-    public function test_creating_tasks_whithout_authentication(): void
+    public function test_creating_tasks_without_authentication(): void
     {
         $this->postJson($this->apiUrl)->assertStatus(401);
     }

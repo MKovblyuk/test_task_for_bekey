@@ -18,7 +18,7 @@ class UncompleteTaskTest extends ApiV1TestCase
         $this->apiUrl .= "/tasks/{$task->id}/uncomplete";
     }
 
-    public function test_uncompleting_tasks_whithout_authentication(): void
+    public function test_uncompleting_tasks_without_authentication(): void
     {
         $this->patchJson($this->apiUrl)->assertStatus(401);
     }
