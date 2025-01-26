@@ -23,9 +23,9 @@ class AuthService implements AuthServiceInterface
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            $expiresAt = $validated['remember'] 
-                ? now()->addDays(self::TOKEN_EXPIRATION_DAYS)
-                : now()->addDays(self::TOKEN_REMEMBER_EXPIRATION_DAYS);
+            $expiresAt = ($validated['remember'] ?? false)
+                ? now()->addDays(self::TOKEN_REMEMBER_EXPIRATION_DAYS)
+                : now()->addDays(self::TOKEN_EXPIRATION_DAYS);
 
             $userToken = $user->createToken(self::TOKEN_PREFIX . $user->id,['*'], $expiresAt);
 
