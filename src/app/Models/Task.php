@@ -23,13 +23,6 @@ class Task extends Model
         'status' => TaskStatus::class,
     ];
 
-    protected static function booted()
-    {
-        static::creating(function ($product) {
-            $product->creator_id = Auth::id();
-        });
-    }
-
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class);
